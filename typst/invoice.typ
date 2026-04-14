@@ -10,6 +10,7 @@
 #let content-column-gap = main-x - seller-x - seller-width
 #let header-to-content-gap = content-y - header-y - header-row-height
 #let content-region-height = signature-y - content-y
+#let signature-column-gap = signature-received-x - signature-issued-x - signature-well-width
 
 #let place-at(x, y, body) = place(top + left, dx: x, dy: y)[#body]
 
@@ -71,7 +72,7 @@
 )
 
 #let signature-row(data) = grid(
-  columns: (signature-well-width, signature-gap, signature-well-width),
+  columns: (signature-well-width, signature-column-gap, signature-well-width),
   column-gutter: 0pt,
   signature-well(data.labels.invoice_issued, helper: data.labels.signature_helper),
   [],

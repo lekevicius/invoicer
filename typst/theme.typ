@@ -43,8 +43,6 @@
 #let label-small-size = 10pt
 #let label-small-line = 10pt
 
-#let table-width = 288pt
-#let table-service-width = 215pt
 #let table-gap = 2pt
 #let table-total-width = 71pt
 #let table-top-pad = 6pt
@@ -58,7 +56,6 @@
 
 #let signature-well-width = 216pt
 #let signature-well-height = 72pt
-#let signature-gap = 54pt
 #let signature-issued-x = 54pt
 #let signature-received-x = 324pt
 #let signature-line-y = 54pt

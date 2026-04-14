@@ -75,7 +75,7 @@
   }
 }
 
-#let table-cell-box(body, width: table-service-width, align_to: left, kind: "body") = {
+#let table-cell-box(body, align_to: left, kind: "body") = {
   let height = if kind == "heading" { table-heading-height } else { table-row-height }
   let stroke = if kind == "footer" { none } else { (bottom: 1pt + color-border) }
 
@@ -84,12 +84,12 @@
     stroke: none,
   )[
     #rect(
-    width: width,
-    height: height,
-    stroke: stroke,
-    inset: 0pt,
+      width: 100%,
+      height: height,
+      stroke: stroke,
+      inset: 0pt,
     )[
-      #aligned-line(table-cell-body(body, kind: kind), width: width, height: height, align_to: align_to)
+      #aligned-line(table-cell-body(body, kind: kind), height: height, align_to: align_to)
     ]
   ]
 }
@@ -98,29 +98,29 @@
   let height = if kind == "heading" { table-heading-height } else { table-row-height }
 
   table.cell(inset: 0pt, stroke: none)[
-    #box(width: table-gap, height: height)[]
+    #box(width: 100%, height: height)[]
   ]
 }
 
 #let table-row-cells(left_body, right_body, kind: "body") = (
-  table-cell-box(left_body, width: table-service-width, kind: kind),
+  table-cell-box(left_body, kind: kind),
   table-gap-cell(kind: kind),
-  table-cell-box(right_body, width: table-total-width, align_to: right, kind: kind),
+  table-cell-box(right_body, align_to: right, kind: kind),
 )
 
-#let invoice-table(items, total, currency: "usd", labels: none) = {
+#let invoice-table(items, total, currency: "usd", labels: none, width: 100%) = {
   let service-label = if labels == none { "Service" } else { labels.service }
   let total-label = if labels == none { "Total" } else { labels.total }
   let sum-label = if labels == none { "Sum" } else { labels.sum }
   let body-cells = items.map(item => table-row-cells(item.title, str(item.amount), kind: "body")).flatten()
 
-  box(width: table-width)[
+  box(width: width)[
     #stack(
       dir: ttb,
       spacing: 0pt,
       box(height: table-top-pad)[],
       table(
-        columns: (table-service-width, table-gap, table-total-width),
+        columns: (1fr, table-gap, table-total-width),
         column-gutter: 0pt,
         row-gutter: 0pt,
         inset: 0pt,
