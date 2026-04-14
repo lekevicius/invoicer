@@ -1,0 +1,21 @@
+{
+  "name": "invoicer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "invoicer": "./src/generate.ts"
+  },
+  "scripts": {
+    "generate": "bun run src/generate.ts",
+    "generate:static": "mkdir -p pdfs && typst compile --root / typst/static.typ pdfs/invoice-static.pdf",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.1",
+    "typescript": "^5.9.3"
+  }
+}
