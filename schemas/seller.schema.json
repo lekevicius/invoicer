@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lekevicius.com/schemas/seller.schema.json",
+  "title": "SellerInput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["seller"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "seller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "personal_code",
+        "activity_number",
+        "address",
+        "phone",
+        "email",
+        "website",
+        "bank"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "personal_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activity_number": {
+          "type": "string",
+          "minLength": 1
+        },
+        "address": {
+          "$ref": "#/definitions/nonEmptyStringArray"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "email": {
+          "type": "string",
+          "minLength": 1
+        },
+        "website": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bank": {
+          "$ref": "#/definitions/bank"
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "background": {
+              "$ref": "#/definitions/optionalAssetPath"
+            },
+            "logotype": {
+              "$ref": "#/definitions/optionalAssetPath"
+            },
+            "signature": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "required": ["svg"],
+              "properties": {
+                "svg": {
+                  "$ref": "#/definitions/optionalAssetPath"
+                },
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "width": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "bank": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["beneficiary", "bank_name", "bank_code", "iban"],
+      "properties": {
+        "beneficiary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bank_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bank_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "iban": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "optionalAssetPath": {
+      "type": ["string", "null"],
+      "minLength": 1
+    }
+  }
+}
