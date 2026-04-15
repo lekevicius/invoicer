@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "schema": 1,
+    "locale": "en-US"
+  },
+  "invoice": {
+    "number": "VX2601",
+    "issue_date": "2026-04-15",
+    "due_date": "2026-04-29",
+    "currency": "USD",
+    "project": "Analytics portal refresh"
+  },
+  "buyer": {
+    "name": "Brightfield Systems, Inc.",
+    "company_code": "84-5629107",
+    "address": [
+      "318 Maple Avenue",
+      "Burlington, VT 05401"
+    ]
+  },
+  "items": [
+    {
+      "title": "Product discovery workshop",
+      "amount": 1800
+    },
+    {
+      "title": "Dashboard interface design",
+      "amount": 3200
+    }
+  ]
+}

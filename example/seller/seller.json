@@ -1,0 +1,65 @@
+{
+  "seller": {
+    "details": [
+      {
+        "label": "Seller",
+        "lines": ["Vertex Labs"],
+        "first_weight": "semibold"
+      },
+      {
+        "label": "Company code",
+        "lines": ["305998412"]
+      },
+      {
+        "label": "VAT number",
+        "lines": ["LT100015842617"]
+      },
+      {
+        "label": "Address",
+        "lines": ["A. Gostauto g. 8", "LT-01108 Vilnius, Lithuania"]
+      },
+      {
+        "label": "Phone",
+        "lines": ["+370 5 214 0148"]
+      },
+      {
+        "label": "Email",
+        "lines": ["billing@vertexlabs.example"]
+      },
+      {
+        "label": "Website",
+        "lines": ["vertexlabs.example"]
+      }
+    ],
+    "bank_details": [
+      { "label": "Recipient", "value": "Vertex Labs" },
+      { "label": "Bank", "value": "SEB Bankas" },
+      { "label": "SWIFT/BIC", "value": "CBVILT2X" },
+      { "label": "Account no.", "value": "LT12 7044 0600 1234 5678" },
+      { "label": "Memo", "value": "Invoice {invoice_number}" },
+      { "label": "Due date", "value": "{due_date}" }
+    ],
+    "assets": {
+      "background": "assets/artwork.png",
+      "logotype": "assets/logotype.svg",
+      "signature": {
+        "svg": "assets/signature.svg",
+        "x": 54,
+        "y": 720,
+        "width": 200
+      }
+    },
+    "theme": {
+      "colors": {
+        "background": "#FFFFFF",
+        "heading": "#8195A5",
+        "text": "#353A3F",
+        "border": "#D9E0E7"
+      },
+      "font": {
+        "family": "Inter",
+        "paths": ["assets/fonts"]
+      }
+    }
+  }
+}
