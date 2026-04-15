@@ -1,14 +1,31 @@
-// Design tokens for the JL invoice Figma layout.
+// Design tokens and default theme for the invoice layout.
 
 #let page-width = 210mm
 #let page-height = 297mm
 
-#let color-bg = rgb("#F8F7F7")
-#let color-heading = rgb("#8C8A7C")
-#let color-text = rgb("#2E3C4B")
-#let color-border = rgb("#D2D2CC")
+#let default-theme = (
+  colors: (
+    background: "#F8F7F7",
+    heading: "#8C8A7C",
+    text: "#2E3C4B",
+    border: "#D2D2CC",
+  ),
+  font: (
+    family: "Colfax",
+  ),
+)
 
-#let font-family = "Colfax"
+#let theme-colors(theme) = theme.at("colors", default: default-theme.colors)
+#let theme-font(theme) = theme.at("font", default: default-theme.font)
+#let theme-color(theme, name) = rgb(theme-colors(theme).at(name, default: default-theme.colors.at(name)))
+#let theme-font-family(theme) = theme-font(theme).at("family", default: default-theme.font.family)
+
+#let color-bg = theme-color(default-theme, "background")
+#let color-heading = theme-color(default-theme, "heading")
+#let color-text = theme-color(default-theme, "text")
+#let color-border = theme-color(default-theme, "border")
+
+#let font-family = theme-font-family(default-theme)
 
 #let margin = 54pt
 #let header-y = 54pt
@@ -27,7 +44,7 @@
 #let date-x = 432pt
 #let header-field-width = 108pt
 
-#let logo-width = 200pt
+#let logo-width = 152pt
 #let logo-height = 27pt
 
 #let block-gap = 12pt

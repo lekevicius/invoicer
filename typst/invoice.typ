@@ -13,8 +13,13 @@
 #let signature-column-gap = signature-received-x - signature-issued-x - signature-well-width
 
 #let place-at(x, y, body) = place(top + left, dx: x, dy: y)[#body]
+#let natural-or-sized-image(path, width: none) = if width == none {
+  image(path)
+} else {
+  image(path, width: width * 1pt)
+}
 
-#let header-row(data) = grid(
+#let header-row(data, theme: default-theme) = grid(
   columns: (logo-width, header-logo-gap, header-field-width, header-field-gap, header-field-width),
   column-gutter: 0pt,
   if data.assets.logotype != none {
@@ -23,12 +28,12 @@
     box(width: logo-width, height: logo-height)[]
   },
   [],
-  field-block(data.labels.invoice_no, (data.header.invoice_number,), width: header-field-width, align_to: right),
+  field-block(data.labels.invoice_no, (data.header.invoice_number,), width: header-field-width, align_to: right, theme: theme),
   [],
-  field-block(data.labels.date, (data.header.issue_date,), width: header-field-width, align_to: right),
+  field-block(data.labels.date, (data.header.issue_date,), width: header-field-width, align_to: right, theme: theme),
 )
 
-#let seller-column(data) = stack(
+#let seller-column(data, theme: default-theme) = stack(
   dir: ttb,
   spacing: block-gap,
   ..data.seller_blocks.map(block => field-block(
@@ -36,10 +41,11 @@
     block.lines,
     width: seller-width,
     first_weight: block.first_weight,
+    theme: theme,
   )),
 )
 
-#let main-column(data) = stack(
+#let main-column(data, theme: default-theme) = stack(
   dir: ttb,
   spacing: block-gap,
   field-block(
@@ -47,50 +53,55 @@
     data.billed_to.lines,
     width: main-width,
     first_weight: data.billed_to.first_weight,
+    theme: theme,
   ),
   field-block(
     data.project.label,
     data.project.lines,
     width: main-width,
     first_weight: data.project.first_weight,
+    theme: theme,
   ),
   invoice-table(
     data.items,
     data.totals.item_sum,
     currency: lower(data.header.currency),
     labels: data.labels,
+    theme: theme,
   ),
-  columns-block(data.labels.seller_bank_details, data.bank_details, width: main-width),
+  columns-block(data.labels.seller_bank_details, data.bank_details, width: main-width, theme: theme),
 )
 
-#let content-row(data) = grid(
+#let content-row(data, theme: default-theme) = grid(
   columns: (seller-width, content-column-gap, main-width),
   column-gutter: 0pt,
-  seller-column(data),
+  seller-column(data, theme: theme),
   [],
-  main-column(data),
+  main-column(data, theme: theme),
 )
 
-#let signature-row(data) = grid(
+#let signature-row(data, theme: default-theme) = grid(
   columns: (signature-well-width, signature-column-gap, signature-well-width),
   column-gutter: 0pt,
-  signature-well(data.labels.invoice_issued, helper: data.labels.signature_helper),
+  signature-well(data.labels.invoice_issued, helper: data.labels.signature_helper, theme: theme),
   [],
-  signature-well(data.labels.invoice_received, helper: data.labels.signature_helper),
+  signature-well(data.labels.invoice_received, helper: data.labels.signature_helper, theme: theme),
 )
 
-#let invoice-flow(data) = stack(
+#let invoice-flow(data, theme: default-theme) = stack(
   dir: ttb,
   spacing: 0pt,
-  header-row(data),
+  header-row(data, theme: theme),
   box(height: header-to-content-gap)[],
-  box(height: content-region-height)[#content-row(data)],
-  signature-row(data),
+  box(height: content-region-height)[#content-row(data, theme: theme)],
+  signature-row(data, theme: theme),
 )
 
 #let render-invoice(data) = {
-  set page(width: page-width, height: page-height, margin: 0pt, fill: color-bg)
-  set text(font: font-family, size: value-size, fill: color-text)
+  let invoice-theme = data.at("theme", default: default-theme)
+
+  set page(width: page-width, height: page-height, margin: 0pt, fill: theme-color(invoice-theme, "background"))
+  set text(font: theme-font-family(invoice-theme), size: value-size, fill: theme-color(invoice-theme, "text"))
 
   if data.assets.background != none {
     place-at(background-x, background-y, image(data.assets.background, width: page-width))
@@ -98,12 +109,12 @@
 
   box(width: page-width, height: page-height)[
     #pad(left: seller-x, right: margin, top: header-y)[
-      #invoice-flow(data)
+      #invoice-flow(data, theme: invoice-theme)
     ]
   ]
 
   if data.assets.signature != none {
     let signature = data.assets.signature
-    place-at(signature.x * 1pt, signature.y * 1pt, image(signature.svg, width: signature.width * 1pt))
+    place-at(signature.x * 1pt, signature.y * 1pt, natural-or-sized-image(signature.svg, width: signature.at("width", default: none)))
   }
 }
