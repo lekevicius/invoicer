@@ -1,6 +1,33 @@
 # Invoicer
 
-Invoicer generates invoice PDFs from JSON data and a seller configuration file. It uses Bun for the CLI and Typst for PDF rendering.
+![Invoicer cover](cover.jpg)
+
+Invoicer is an agent-friendly invoice generator for producing polished PDFs from structured JSON. It keeps invoice content, seller identity, bank rows, assets, and theme tokens separate, so an AI coding agent can draft invoices, update seller configuration, validate data, and regenerate PDFs without poking through layout code.
+
+## Features
+
+- Agent-readable `skill/` instructions for drafting invoices and generating PDFs.
+- Schema-validated invoice and seller JSON, so agents get fast feedback on bad data.
+- Seller-owned config for left-column details, bank rows, logo, signature, colors, and fonts.
+- Portable example data and assets that agents can copy, adapt, and test.
+- Typst templates for precise A4 layout without asking agents to hand-place every field.
+- Debug render JSON for inspecting exactly what the agent passed into Typst.
+
+## Get Started With an Agent
+
+Ask your agent to set up your seller config:
+
+```text
+Read the README and skill/SKILL.md in this repo. Create my seller/seller.json from the example seller config, replacing the seller details, bank rows, logo, signature, theme colors, and font paths with my own. Keep paths relative to seller/seller.json where possible, then run the generator on the example invoice to verify it compiles.
+```
+
+Then ask it to make an invoice:
+
+```text
+Use the invoicing skill in this repo. Create the next invoice JSON in invoices/, using my seller/seller.json, buyer legal details, project name, currency, and line items. Generate the PDF into pdfs/ and tell me the output path.
+```
+
+For recurring use, install or copy the `skill/` directory into your agent's skills folder so it can follow the bundled workflow directly.
 
 ## Requirements
 
