@@ -12,6 +12,7 @@ Invoicer is an agent-friendly invoice generator for producing polished PDFs from
 - Portable example data and assets that agents can copy, adapt, and test.
 - Typst templates for precise A4 layout without asking agents to hand-place every field.
 - Debug render JSON for inspecting exactly what the agent passed into Typst.
+- Matching Figma community template for visual customization: [Invoicer template](https://www.figma.com/community/file/1626308788823411442).
 
 ## Get Started With an Agent
 
