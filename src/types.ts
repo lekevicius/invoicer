@@ -3,14 +3,8 @@ import type { LocaleLabels } from "./locales";
 export type SellerInput = {
   $schema?: string;
   seller: {
-    name: string;
-    personal_code: string;
-    activity_number: string;
-    address: string[];
-    phone: string;
-    email: string;
-    website: string;
-    bank: BankDetails;
+    details: SellerDetailBlock[];
+    bank_details: BankDetailRow[];
     assets?: {
       background?: string | null;
       logotype?: string | null;
@@ -20,6 +14,18 @@ export type SellerInput = {
         y?: number;
         width?: number;
       } | null;
+    };
+    theme?: {
+      colors?: {
+        background?: string;
+        heading?: string;
+        text?: string;
+        border?: string;
+      };
+      font?: {
+        family?: string;
+        paths?: string[];
+      };
     };
   };
 };
@@ -42,28 +48,43 @@ export type InvoiceInput = {
     company_code: string;
     address: string[];
   };
-  seller_bank?: Partial<BankDetails>;
   items: Array<{
     title: string;
     amount: number;
   }>;
 };
 
-export type BankDetails = {
-  beneficiary: string;
-  bank_name: string;
-  bank_code: string;
-  iban: string;
+export type SellerDetailBlock = {
+  label: string;
+  lines: string[];
+  first_weight?: "regular" | "semibold";
+};
+
+export type BankDetailRow = {
+  label: string;
+  value: string;
 };
 
 export type RenderBlock = {
   label: string;
   lines: string[];
-  first_weight: "regular" | "medium";
+  first_weight: "regular" | "semibold";
 };
 
 export type InvoiceRenderData = {
   render_schema: 1;
+  theme: {
+    colors: {
+      background: string;
+      heading: string;
+      text: string;
+      border: string;
+    };
+    font: {
+      family: string;
+      paths: string[];
+    };
+  };
   assets: {
     background: string | null;
     logotype: string | null;
@@ -71,7 +92,7 @@ export type InvoiceRenderData = {
       svg: string;
       x: number;
       y: number;
-      width: number;
+      width?: number;
     } | null;
   };
   header: {

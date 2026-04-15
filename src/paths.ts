@@ -5,9 +5,9 @@ export function resolvePath(path: string): string {
   return isAbsolute(path) ? path : resolve(process.cwd(), path);
 }
 
-export function toTypstRootPath(path: string | null | undefined): string | null {
+export function toTypstRootPath(path: string | null | undefined, baseDir?: string): string | null {
   if (!path) return null;
-  return resolvePath(path);
+  return isAbsolute(path) ? path : resolve(baseDir ?? process.cwd(), path);
 }
 
 export async function ensureParentDir(path: string): Promise<void> {

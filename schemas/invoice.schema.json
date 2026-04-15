@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://lekevicius.com/schemas/invoice.schema.json",
+  "$id": "https://example.com/schemas/invoice.schema.json",
   "title": "InvoiceInput",
   "type": "object",
   "additionalProperties": false,
@@ -64,28 +64,6 @@
         },
         "address": {
           "$ref": "#/definitions/nonEmptyStringArray"
-        }
-      }
-    },
-    "seller_bank": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "beneficiary": {
-          "type": "string",
-          "minLength": 1
-        },
-        "bank_name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "bank_code": {
-          "type": "string",
-          "minLength": 1
-        },
-        "iban": {
-          "type": "string",
-          "minLength": 1
         }
       }
     },

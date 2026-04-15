@@ -1,4 +1,4 @@
-import { basename, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { tmpdir } from "node:os";
 import { mkdtemp, rm } from "node:fs/promises";
 
@@ -21,7 +21,7 @@ export async function generateInvoice(options: GenerateOptions): Promise<Generat
   const sellerInput = await readValidatedJson<SellerInput>(sellerPath, SELLER_SCHEMA_PATH);
   const invoiceInput = await readValidatedJson<InvoiceInput>(invoicePath, INVOICE_SCHEMA_PATH);
   const locale = getLocale(invoiceInput.meta.locale);
-  const renderData = buildRenderData(sellerInput, invoiceInput, locale.labels);
+  const renderData = buildRenderData(sellerInput, invoiceInput, locale.labels, dirname(sellerPath));
 
   const invoiceNumber = renderData.header.invoice_number;
   const outPath = resolvePath(options.outPath ?? join(DEFAULT_OUTPUT_DIR, `${invoiceNumber}.pdf`));
@@ -34,7 +34,7 @@ export async function generateInvoice(options: GenerateOptions): Promise<Generat
 
     if (!options.renderOnly) {
       await ensureParentDir(outPath);
-      await compileInvoicePdf(jsonPath, outPath);
+      await compileInvoicePdf(jsonPath, outPath, renderData.theme.font.paths);
     }
   } finally {
     if (tempDir) {
